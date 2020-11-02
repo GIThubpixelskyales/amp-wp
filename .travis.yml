@@ -31,7 +31,6 @@ branches:
     - /^\d+\.\d+$/
 
 install:
-  - travis_retry composer self-update --1
   - nvm install
   - composer install
   - export DEV_LIB_PATH=vendor/xwp/wp-dev-lib/scripts
@@ -69,8 +68,7 @@ jobs:
       env: WP_VERSION=latest DEV_LIB_ONLY=phpsyntax
       before_script:
         - phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
-        # TODO: Exact version of ergebnis/composer-normalize can be removed once Composer v2 is supported.
-        - composer require --dev ergebnis/composer-normalize:2.9.0 --ignore-platform-reqs
+        - composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
       script:
         - source "$DEV_LIB_PATH/travis.script.sh"
         - composer validate --no-check-all
@@ -84,7 +82,6 @@ jobs:
       name: Static analysis (PHP)
       php: "7.4"
       install:
-        - travis_retry composer self-update --1
         - composer install
       script:
         - composer analyze
@@ -101,7 +98,6 @@ jobs:
       php: "7.4"
       env: WP_VERSION=latest DEV_LIB_SKIP=phpcs,eslint,xmllint,phpsyntax,phpunit
       install:
-        - travis_retry composer self-update --1
         - nvm install
         - composer install
         - npm install
@@ -162,7 +158,6 @@ jobs:
       php: "5.6"
       env: TEST_SKIP_PHPSTAN=1
       install:
-        - travis_retry composer self-update --1
         - composer --working-dir=lib/common install
         - composer --working-dir=lib/optimizer install
       script:
@@ -173,7 +168,6 @@ jobs:
       php: "7.4"
 
       install:
-        - travis_retry composer self-update --1
         - composer --working-dir=lib/common install
         - composer --working-dir=lib/optimizer install
       script:
