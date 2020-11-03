@@ -41,7 +41,9 @@ jobs:
       - name: Install Composer dependencies
         # Scripts are not ignored as they are needed to apply patches for the
         # `sabberworm/php-css-parser` dependency.
-        run: composer install -vvv --prefer-dist --optimize-autoloader
+        run: |
+          composer self-update --2
+          composer install --prefer-dist --optimize-autoloader
 
       - name: Get npm cache directory
         id: npm-cache
