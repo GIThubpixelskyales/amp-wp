@@ -25,6 +25,13 @@ jobs:
       - name: Check out source files
         uses: actions/checkout@v2
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: composer:v2
+
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -41,9 +48,7 @@ jobs:
       - name: Install Composer dependencies
         # Scripts are not ignored as they are needed to apply patches for the
         # `sabberworm/php-css-parser` dependency.
-        run: |
-          composer self-update --2
-          composer install --prefer-dist --optimize-autoloader
+        run: composer install --prefer-dist --optimize-autoloader
 
       - name: Get npm cache directory
         id: npm-cache
